@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { QuickView, Text, Container, Header, Body, Image } from '@components';
+import {
+  QuickView, Text, Container, Header, Body, Image,
+} from '@components';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 const vacation = { key: 'vacation', color: 'red', selectedDotColor: 'blue' };
@@ -11,6 +13,7 @@ class MydayApp extends PureComponent {
   eventTapped = () => {
     console.log('123');
   };
+
   render() {
     return (
       <Container>
@@ -25,9 +28,9 @@ class MydayApp extends PureComponent {
           // Max amount of months allowed to scroll to the future. Default = 50
           futureScrollRange={50}
           // Enable or disable scrolling of calendar list
-          scrollEnabled={true}
+          scrollEnabled
           // Enable or disable vertical scroll indicator. Default = false
-          showScrollIndicator={true}
+          showScrollIndicator
         />
       </Container>
     );

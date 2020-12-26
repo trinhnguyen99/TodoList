@@ -3,9 +3,9 @@
  */
 const mainBottomTab = {
   homeStack: 'HomeStack',
-  //bookmarkStack: 'BookmarkStack',
+  // bookmarkStack: 'BookmarkStack',
   mailStack: 'MailStack',
   moreStack: 'MoreStack',
-  importantStack: 'ImportantStack'
+  importantStack: 'ImportantStack',
 };
 export default mainBottomTab;

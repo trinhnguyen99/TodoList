@@ -19,16 +19,17 @@ import {
   Header,
 } from '@components';
 import { Alert } from 'react-native';
-import { lightPrimaryColor, Color,  lightSecondaryColor } from '@themes/ThemeComponent/Common/Color';
+import { lightPrimaryColor, Color, lightSecondaryColor } from '@themes/ThemeComponent/Common/Color';
 import NavigationService from '@utils/navigation';
 import firestore from '@react-native-firebase/firestore';
-import diaryStack from '../routes';
-import FlatList from '@components/Common/FlatList/DefaultFlatList'
+import FlatList from '@components/Common/FlatList/DefaultFlatList';
 import { Icon, ListItem, Overlay } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import mainBottomTab from '@contents/Main/routes';
+import diaryStack from '../routes';
 import importantStack from '../../Important/routes';
+
 interface Props {}
 interface State {
   loggedIn: boolean;
@@ -110,95 +111,101 @@ class DiaryApp extends PureComponent<Props, State> {
   renderItem = ({ item, index }: { item: any; index: number }) => {
     if (!item._data.status) {
       return (
-        <TouchableOpacity onLongPress={()=>{
-          this.setState({isOverlayVisible: true, idDelete: item?._ref?.id})
-    
-        }}>
-          <QuickView
-          backgroundColor={item._data.color}
-          borderRadius={10}
-          padding={20}
-          marginVertical={10}
+        <TouchableOpacity onLongPress={() => {
+          this.setState({ isOverlayVisible: true, idDelete: item?._ref?.id });
+        }}
         >
-          <QuickView row justifyContent="space-between">
-            <QuickView>
-            <Text fontSize={25} bold color={Color.white}>{item._data.title}</Text>
-            <Text  color={Color.white}>{item._data.content}</Text>
-            <Text fontSize={17} color={Color.white}>{item._data.date}</Text>
-            <QuickView row>
-            <Text fontSize={19} color={Color.white}>{item._data.time} - </Text>
-            <Text fontSize={19} color={Color.white}>{item._data.time}</Text>
+          <QuickView
+            backgroundColor={item._data.color}
+            borderRadius={10}
+            padding={20}
+            marginVertical={10}
+          >
+            <QuickView row justifyContent="space-between">
+              <QuickView>
+                <Text fontSize={25} bold color={Color.white}>{item._data.title}</Text>
+                <Text color={Color.white}>{item._data.content}</Text>
+                <Text fontSize={17} color={Color.white}>{item._data.date}</Text>
+                <QuickView row>
+                  <Text fontSize={19} color={Color.white}>
+                    {item._data.time}
+                    {' '}
+                    -
+                    {' '}
+                  </Text>
+                  <Text fontSize={19} color={Color.white}>{item._data.time}</Text>
+                </QuickView>
+              </QuickView>
+              <Icon
+                name="staro"
+                type="antdesign"
+                color="#FFFFFF"
+                size={30}
+              />
             </QuickView>
-            </QuickView>
-          <Icon
-              name='staro'
-              type='antdesign'
-              color='#FFFFFF'
-              size={30}
-    />
           </QuickView>
-        </QuickView>
         </TouchableOpacity>
-      )
+      );
     }
     return null;
   };
+
   toggleOverlay = () => {
     this.setState((prevState: any) => ({
-      isOverlayVisible: !prevState.isOverlayVisible
+      isOverlayVisible: !prevState.isOverlayVisible,
     }));
-  }
+  };
 
   handleUpdate = () => {
-    const {idDelete } = this.state;
+    const { idDelete } = this.state;
     if (idDelete) {
       firestore()
-  .collection('Diaries')
-  .doc(idDelete)
-  .update({
-    status: 1,
-  })
-  .then(() => {
-    console.log('User deleted!');
-    this.setState({isOverlayVisible: false});
-    // NavigationService.navigate(mainBottomTab.importantStack, {screen: importantStack.index})
-  });
+        .collection('Diaries')
+        .doc(idDelete)
+        .update({
+          status: 1,
+        })
+        .then(() => {
+          console.log('User deleted!');
+          this.setState({ isOverlayVisible: false });
+          // NavigationService.navigate(mainBottomTab.importantStack, {screen: importantStack.index})
+        });
     }
-  }
+  };
 
   handleDelete = () => {
-    const {idDelete} = this.state;
-    console.log("1!!!!", idDelete);
+    const { idDelete } = this.state;
+    console.log('1!!!!', idDelete);
     if (idDelete) {
       firestore()
-  .collection('Diaries')
-  .doc(idDelete)
-  .delete()
-  .then(() => {
-    console.log('User deleted!');
-    this.setState({isOverlayVisible: false})
-  });
+        .collection('Diaries')
+        .doc(idDelete)
+        .delete()
+        .then(() => {
+          console.log('User deleted!');
+          this.setState({ isOverlayVisible: false });
+        });
     }
-    
-    
-  }
+  };
 
   render() {
-    const { loggedIn, user, diaries,isOverlayVisible } = this.state;
+    const {
+      loggedIn, user, diaries, isOverlayVisible,
+    } = this.state;
     console.log('DiaryApp -> render -> user', diaries[0]?._ref?.id);
     return (
       <Container>
         <Overlay isVisible={isOverlayVisible} onBackdropPress={this.toggleOverlay}>
           <QuickView>
-          <Text center bold fontSize={20} type="title">Thông báo</Text>
-          <Text fontSize={18}>Vui lòng chọn trạng thái !</Text>
-          <QuickView justifyContent="space-between" row>
-            <Button title="Xong" width={100} onPress={this.handleUpdate} />
-            <Button title="Xóa" width={100} onPress={this.handleDelete}/>
-          </QuickView>
+            <Text center bold fontSize={20} type="title">Thông báo</Text>
+            <Text fontSize={18}>Vui lòng chọn trạng thái !</Text>
+            <QuickView justifyContent="space-between" row>
+              <Button title="Xong" width={100} onPress={this.handleUpdate} />
+              <Button title="Xóa" width={100} onPress={this.handleDelete} />
+            </QuickView>
           </QuickView>
         </Overlay>
-        <Header backIcon title="Let's plan"/>
+        <Header backIcon title="Let's plan" />
         <Body>
           <QuickView center>
             {/* {loggedIn && user && user?.displayName ? (
@@ -217,70 +224,70 @@ class DiaryApp extends PureComponent<Props, State> {
           {loggedIn && (
             <>
 
-
-
             </>
           )}
           {loggedIn ? (
-            <FlatList data={diaries} renderItem={this.renderItem}
+            <FlatList
+              data={diaries}
+              renderItem={this.renderItem}
             />
           ) : null}
         </Body>
-         <QuickView row>
-         <ListItem
+        <QuickView row>
+          <ListItem
               // leftAvatar={{ rounded: true, icon: { name: l.iconName, size: l.iconSize || 25, type: 'material-community' } }}
               // key={i.toString()}
-              activeOpacity={1}
-              linearGradientProps={{
-                colors: ['#f44336', '#ffa000'],
-                start: { x: 1, y: 0 },
-                end: { x: 0.2, y: 0 },
-              }}
-              underlayColor="transparent"
-              ViewComponent={LinearGradient as any}
-              title='Add a task'
-              titleStyle={{ color: 'white', fontWeight: 'bold' }}
-              subtitleStyle={{ color: 'white' }}
+            activeOpacity={1}
+            linearGradientProps={{
+              colors: ['#f44336', '#ffa000'],
+              start: { x: 1, y: 0 },
+              end: { x: 0.2, y: 0 },
+            }}
+            underlayColor="transparent"
+            ViewComponent={LinearGradient as any}
+            title="Add a task"
+            titleStyle={{ color: 'white', fontWeight: 'bold' }}
+            subtitleStyle={{ color: 'white' }}
               // style={textAlign: 'center'}
               // chevronColor="white"
               // chevron={!!((l.stack || l.screen))}
-              containerStyle={{
-                height:60,
-                width:250,
-                borderRadius: 8,
-                borderWidth:1,
-                marginLeft:8,
-              }}
-              onPress={() => NavigationService.navigate(diaryStack.add)}
-            />
-        <ListItem
+            containerStyle={{
+              height: 60,
+              width: 250,
+              borderRadius: 8,
+              borderWidth: 1,
+              marginLeft: 8,
+            }}
+            onPress={() => NavigationService.navigate(diaryStack.add)}
+          />
+          <ListItem
               // leftAvatar={{ rounded: true, icon: { name: l.iconName, size: l.iconSize || 25, type: 'material-community' } }}
               // key={i.toString()}
-              activeOpacity={1}
-              linearGradientProps={{
-                colors: [ '#b2dfdb' , '#009688',],
-                start: { x: 1, y: 0 },
-                end: { x: 0.2, y: 0 },
-              }}
-              underlayColor="transparent"
-              ViewComponent={LinearGradient as any}
-              title='Log out'
-              titleStyle={{ color: 'white', fontWeight: 'bold', textAlign:'center' }}
-              subtitleStyle={{ color: 'white' }}
-              containerStyle={{
-                // marginVertical: 8,
-                height:60,
-                width:150,
-                borderRadius: 8,
-                borderWidth:1,
-                alignSelf:'flex-end',
-                justifyContent:'center',
-                alignItems:'center',
-                marginRight:8,
-              }}
-              onPress={this.signOut}
-            />
-         </QuickView>
+            activeOpacity={1}
+            linearGradientProps={{
+              colors: ['#b2dfdb', '#009688'],
+              start: { x: 1, y: 0 },
+              end: { x: 0.2, y: 0 },
+            }}
+            underlayColor="transparent"
+            ViewComponent={LinearGradient as any}
+            title="Log out"
+            titleStyle={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}
+            subtitleStyle={{ color: 'white' }}
+            containerStyle={{
+              // marginVertical: 8,
+              height: 60,
+              width: 150,
+              borderRadius: 8,
+              borderWidth: 1,
+              alignSelf: 'flex-end',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 8,
+            }}
+            onPress={this.signOut}
+          />
+        </QuickView>
       </Container>
     );
   }

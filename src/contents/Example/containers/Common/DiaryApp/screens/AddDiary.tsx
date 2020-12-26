@@ -19,6 +19,7 @@ import { lightPrimaryColor } from '@themes/ThemeComponent/Common/Color';
 import NavigationService from '@utils/navigation';
 import RNCalendarEvents from 'react-native-calendar-events';
 import { Alert } from 'react-native';
+
 interface Props {}
 interface State {
   color: string;
@@ -33,6 +34,7 @@ class AddDiary extends PureComponent<Props, State> {
   datePickerRef: any;
 
   starttimePickerRef: any;
+
   endTimePickerRef: any;
 
   constructor(props: Props) {
@@ -186,8 +188,7 @@ class AddDiary extends PureComponent<Props, State> {
             <ColorPicker
               onColorSelected={(color) =>
                 // Alert.alert(`Color selected: ${color}`)
-                this.setState({ color })
-              }
+                this.setState({ color })}
               style={{ flex: 1 }}
             />
           </QuickView>

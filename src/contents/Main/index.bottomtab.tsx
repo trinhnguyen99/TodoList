@@ -16,7 +16,6 @@ import HomeStack from './containers/Home/index.stack';
 import MoreStack from './containers/More/index.stack';
 import ImportantStack from '../Example/containers/Common/Important/index.stack';
 
-
 const BottomTabs = createBottomTabNavigator();
 
 function MainBottomTab(props: any) {

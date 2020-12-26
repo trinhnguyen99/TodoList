@@ -19,14 +19,15 @@ import {
   Header,
 } from '@components';
 import { Alert } from 'react-native';
-import { lightPrimaryColor, Color,  lightSecondaryColor } from '@themes/ThemeComponent/Common/Color';
+import { lightPrimaryColor, Color, lightSecondaryColor } from '@themes/ThemeComponent/Common/Color';
 import NavigationService from '@utils/navigation';
 import firestore from '@react-native-firebase/firestore';
-import diaryStack from '../routes';
-import FlatList from '@components/Common/FlatList/DefaultFlatList'
+import FlatList from '@components/Common/FlatList/DefaultFlatList';
 import { Icon, ListItem, Overlay } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import diaryStack from '../routes';
+
 interface Props {}
 interface State {
   loggedIn: boolean;
@@ -108,80 +109,81 @@ class ImportantScreen extends PureComponent<Props, State> {
   renderItem = ({ item, index }: { item: any; index: number }) => {
     if (item._data.status) {
       return (
-        <TouchableOpacity 
-        // onLongPress={()=>{
-        //   this.setState({isOverlayVisible: true, idDelete: item?._ref?.id})
-    
-        // }}
-        >
+        <TouchableOpacity>
           <QuickView
-          backgroundColor={item._data.color}
-          borderRadius={10}
-          padding={20}
-          marginVertical={10}
-        >
-          <QuickView row justifyContent="space-between">
-            <QuickView>
-            <Text fontSize={25} bold color={Color.white}>{item._data.title}</Text>
-            <Text  color={Color.white}>{item._data.content}</Text>
-            <Text fontSize={17} color={Color.white}>{item._data.date}</Text>
-            <QuickView row>
-            <Text fontSize={19} color={Color.white}>{item._data.time} - </Text>
-            <Text fontSize={19} color={Color.white}>{item._data.time}</Text>
+            backgroundColor={item._data.color}
+            borderRadius={10}
+            padding={20}
+            marginVertical={10}
+          >
+            <QuickView row justifyContent="space-between">
+              <QuickView>
+                <Text fontSize={25} bold color={Color.white}>{item._data.title}</Text>
+                <Text color={Color.white}>{item._data.content}</Text>
+                <Text fontSize={17} color={Color.white}>{item._data.date}</Text>
+                <QuickView row>
+                  <Text fontSize={19} color={Color.white}>
+                    {item._data.time}
+                    {' '}
+                    -
+                    {' '}
+                  </Text>
+                  <Text fontSize={19} color={Color.white}>{item._data.time}</Text>
+                </QuickView>
+              </QuickView>
+              <Icon
+                name="staro"
+                type="antdesign"
+                color="#FFFFFF"
+                size={30}
+              />
             </QuickView>
-            </QuickView>
-          <Icon
-              name='staro'
-              type='antdesign'
-              color='#FFFFFF'
-              size={30}
-    />
           </QuickView>
-        </QuickView>
         </TouchableOpacity>
-      )
+      );
     }
     return null;
   };
+
   toggleOverlay = () => {
     this.setState((prevState: any) => ({
-      isOverlayVisible: !prevState.isOverlayVisible
+      isOverlayVisible: !prevState.isOverlayVisible,
     }));
-  }
+  };
 
   handleDelete = () => {
-    const {idDelete} = this.state;
-    console.log("1!!!!", idDelete);
+    const { idDelete } = this.state;
+    console.log('1!!!!', idDelete);
     if (idDelete) {
       firestore()
-  .collection('Diaries')
-  .doc(idDelete)
-  .delete()
-  .then(() => {
-    console.log('User deleted!');
-    this.setState({isOverlayVisible: false})
-  });
+        .collection('Diaries')
+        .doc(idDelete)
+        .delete()
+        .then(() => {
+          console.log('User deleted!');
+          this.setState({ isOverlayVisible: false });
+        });
     }
-    
-    
-  }
+  };
 
   render() {
-    const { loggedIn, user, diaries,isOverlayVisible } = this.state;
+    const {
+      loggedIn, user, diaries, isOverlayVisible,
+    } = this.state;
     console.log('DiaryApp -> render -> user', diaries[0]?._ref?.id);
     return (
       <Container>
         <Overlay isVisible={isOverlayVisible} onBackdropPress={this.toggleOverlay}>
           <QuickView>
-          <Text center bold fontSize={20} type="title">Thông báo</Text>
-          <Text fontSize={18}>Vui lòng chọn trạng thái !</Text>
-          <QuickView justifyContent="space-between" row>
-            <Button title="Xong" width={100} onPress={this.toggleOverlay} />
-            <Button title="Xóa" width={100} onPress={this.handleDelete}/>
-          </QuickView>
+            <Text center bold fontSize={20} type="title">Thông báo</Text>
+            <Text fontSize={18}>Vui lòng chọn trạng thái !</Text>
+            <QuickView justifyContent="space-between" row>
+              <Button title="Xong" width={100} onPress={this.toggleOverlay} />
+              <Button title="Xóa" width={100} onPress={this.handleDelete} />
+            </QuickView>
           </QuickView>
         </Overlay>
-        <Header backIcon title="Let's plan"/>
+        <Header backIcon title="Let's plan" />
         <Body>
           <QuickView center>
             {/* {loggedIn && user && user?.displayName ? (
@@ -200,16 +202,16 @@ class ImportantScreen extends PureComponent<Props, State> {
           {loggedIn && (
             <>
 
-
-
             </>
           )}
           {loggedIn ? (
-            <FlatList data={diaries} renderItem={this.renderItem}
+            <FlatList
+              data={diaries}
+              renderItem={this.renderItem}
             />
           ) : null}
         </Body>
-         
+
       </Container>
     );
   }

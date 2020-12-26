@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  Alert, StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 import { Agenda } from 'react-native-calendars';
 
 interface State {
@@ -18,7 +20,7 @@ export default class AgendaScreen extends Component<any, State> {
     return (
       <Agenda
         loadItemsForMonth={this.loadItems.bind(this)}
-        selected={'2020-12-24'}
+        selected="2020-12-24"
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
@@ -59,7 +61,7 @@ export default class AgendaScreen extends Component<any, State> {
           const numItems = Math.floor(Math.random() * 3 + 1);
           for (let j = 0; j < numItems; j++) {
             this.state.items[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
+              name: `Item for ${strTime} #${j}`,
               height: Math.max(50, Math.floor(Math.random() * 150)),
             });
           }
@@ -79,7 +81,8 @@ export default class AgendaScreen extends Component<any, State> {
     return (
       <TouchableOpacity
         style={[styles.item, { height: item.height }]}
-        onPress={() => Alert.alert(item.name)}>
+        onPress={() => Alert.alert(item.name)}
+      >
         <Text>{item.name}</Text>
       </TouchableOpacity>
     );

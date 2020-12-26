@@ -17,8 +17,8 @@ const commonStack = {
   modal: 'ModalExampleScreen',
   carousel: 'CarouselExampleScreen',
   diary: 'DiaryAppStack',
-  calender:'CalenderAppStack', 
-  myday:'MydayAppStack'
+  calender: 'CalenderAppStack',
+  myday: 'MydayAppStack',
 };
 
 export default commonStack;

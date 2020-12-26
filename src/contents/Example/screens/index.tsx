@@ -11,8 +11,8 @@ import {
 import { Color } from '@themes/Theme';
 import { withTranslation } from 'react-i18next';
 import SwitchChangeTheme from '@contents/Config/Shared/SwitchChangeTheme';
-import { exampleList } from '../list';
 import { FlatList } from 'react-native-gesture-handler';
+import { exampleList } from '../list';
 
 const styles = StyleSheet.create({
   list: {
@@ -42,36 +42,46 @@ class ExampleList extends PureComponent<Props> {
   render() {
     const { t } = this.props;
     return (
-      <Container >
+      <Container>
         <QuickView>
           <View style={styles.headerContainer}>
             <Icon color="white" name="clipboard-list" type="font-awesome-5" size={62} />
-            <Text style={styles.heading}>{t('header:example')} </Text>
+            <Text style={styles.heading}>
+              {t('header:example')}
+              {' '}
+            </Text>
           </View>
           <QuickView row center position="absolute" right={15} top={160}>
             <Icon name="theme-light-dark" type="material-community" style={{ marginRight: 5 }} color={Color.white} />
             <SwitchChangeTheme />
           </QuickView>
         </QuickView>
-        <Body backgroundImage={{source:require('@assets/images/3.png')}} paddingVertical={15}>
-          <QuickView style={{flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'}}>
-          {exampleList.map((l: any, i: number) => (
-            <QuickView 
-              onPress={() => {
-                if (l.stack || l.screen) {
-                  NavigationService.navigate(l.stack, {
-                    screen: l.screen,
-                  });
-                }
-              }}
-             center backgroundColor={l.linearGradientColors[0]} borderRadius={10} marginBottom={20} height={150} row width={"45%"}>
-              <Icon color="white" name={l.iconName} type='material-community' />
-            <QuickView marginLeft={10}>
-            <Text bold color="white" type="title">{l.name}</Text>
-            <Text color="white">{l.subtitle}</Text>
+        <Body backgroundImage={{ source: require('@assets/images/3.png') }} paddingVertical={15}>
+          <QuickView style={{ flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between' }}>
+            {exampleList.map((l: any, i: number) => (
+              <QuickView
+                onPress={() => {
+                  if (l.stack || l.screen) {
+                    NavigationService.navigate(l.stack, {
+                      screen: l.screen,
+                    });
+                  }
+                }}
+                center
+                backgroundColor={l.linearGradientColors[0]}
+                borderRadius={10}
+                marginBottom={20}
+                height={150}
+                row
+                width="45%"
+              >
+                <Icon color="white" name={l.iconName} type="material-community" />
+                <QuickView marginLeft={10}>
+                  <Text bold color="white" type="title">{l.name}</Text>
+                  <Text color="white">{l.subtitle}</Text>
 
-            </QuickView>
-            </QuickView>
+                </QuickView>
+              </QuickView>
             //   <ListItem
             //   leftAvatar={{ rounded: true, icon: { name: l.iconName, size: l.iconSize || 25, type: 'material-community' } }}
             //   key={i.toString()}
@@ -104,8 +114,8 @@ class ExampleList extends PureComponent<Props> {
             //     }
             //   }}
             // />
-          ))}
-            </QuickView>
+            ))}
+          </QuickView>
 
         </Body>
       </Container>

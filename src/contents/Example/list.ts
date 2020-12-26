@@ -15,7 +15,7 @@ export const exampleList = [
     name: 'Calendar',
     iconName: 'calendar',
     subtitle: 'See more plan',
-    linearGradientColors: [ '#94bbe9' , '#eeaeca',],
+    linearGradientColors: ['#94bbe9', '#eeaeca'],
     stack: exampleStack.commonExampleStack,
     screen: commonStack.calender,
   },
@@ -28,5 +28,4 @@ export const exampleList = [
     screen: commonStack.diary,
   },
 
-  
 ];

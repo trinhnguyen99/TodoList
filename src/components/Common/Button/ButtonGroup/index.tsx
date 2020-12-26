@@ -1,7 +1,7 @@
 import React from 'react';
 import QuickView from '@components/Common/View/QuickView';
-import Button, { ButtonProps } from '../DefaultButton';
 import { Text } from '@react-native-community/art';
+import Button, { ButtonProps } from '../DefaultButton';
 
 export interface ButtonGroupProps extends Omit<ButtonProps, 'title'|'t'|'onPress'|'margin'|'marginLeft'|'marginVertical'>{
   propsChange?: boolean;
@@ -101,7 +101,7 @@ class ButtonGroup extends React.Component<ButtonGroupProps, State> {
     } = this.props;
     const { activeIndex } = this.state;
     return (
-      <Text></Text>
+      <Text />
     );
   }
 }
