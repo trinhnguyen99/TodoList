@@ -47,7 +47,7 @@ class AddDiary extends PureComponent<Props, State> {
     //   // Authorize a client with credentials, then call the Google Calendar API.
     //   this.authorize(JSON.parse(content), this.listEvents);
     // });
-    RNCalendarEvents.requestPermissions(true).then(
+    RNCalendarEvents.requestPermissions(false).then(
       (result) => {
         Alert.alert('Read-only Auth requested', result);
       },
@@ -55,6 +55,8 @@ class AddDiary extends PureComponent<Props, State> {
         console.error(result);
       },
     );
+
+    // RNCalendarEvents.authorizeEventStore();
   }
 
   // getAccessToken = (oAuth2Client: any, callback: any) => {
@@ -82,7 +84,7 @@ class AddDiary extends PureComponent<Props, State> {
   //   });
   // };
 
-  handleAddDiary = () => {
+  handleAddDiary = async () => {
     const { color } = this.state;
     const title = this.title.getText();
     const content = this.content.getText();
@@ -94,23 +96,15 @@ class AddDiary extends PureComponent<Props, State> {
       summary: 'Poc Dev From Now',
       time: 480,
     };
+    const allCalendar = await RNCalendarEvents.findCalendars();
+    console.log('cale', allCalendar);
 
-    RNCalendarEvents.findCalendars().then(
-      (result) => {
-        Alert.alert(
-          'Calendars',
-          result
-            .reduce((acc: any, cal: any) => {
-              acc.push(cal.title);
-              return acc;
-            }, [])
-            .join('\n'),
-        );
-      },
-      (result) => {
-        console.error(result);
-      },
+    const data = await RNCalendarEvents.fetchAllEvents(
+      new Date('1 January 2020 15:48 UTC').toISOString(),
+      new Date('31 December 2020 15:48 UTC').toISOString(),
     );
+    console.log('data', data);
+
     firestore()
       .collection('Diaries')
       .add({
@@ -188,7 +182,8 @@ class AddDiary extends PureComponent<Props, State> {
             <ColorPicker
               onColorSelected={(color) =>
                 // Alert.alert(`Color selected: ${color}`)
-                this.setState({ color })}
+                this.setState({ color })
+              }
               style={{ flex: 1 }}
             />
           </QuickView>

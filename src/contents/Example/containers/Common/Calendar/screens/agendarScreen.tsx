@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Alert, StyleSheet, Text, View, TouchableOpacity,
-} from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 
 interface State {
@@ -25,26 +23,17 @@ export default class AgendaScreen extends Component<any, State> {
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
         items={{
-          '2020-12-24': [{ name: 'item 1 - any js object' }],
-          '2020-12-25': [{ name: 'item 2 - any js object', height: 80 }],
-          '2020-12-26': [],
-          '2020-12-27': [
-            { name: 'item 3 - any js object' },
-            { name: 'any js object' },
-          ],
+          '2020-12-28': [{ name: 'Add new Task - Bao ve Do an', height: 80 }],
+          '2020-12-29': [{ name: 'item 2 - any js object', height: 80 }],
         }}
         // markingType={'period'}
-        // markedDates={{
-        //    '2017-05-08': {textColor: '#43515c'},
-        //    '2017-05-09': {textColor: '#43515c'},
-        //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-        //    '2017-05-21': {startingDay: true, color: 'blue'},
-        //    '2017-05-22': {endingDay: true, color: 'gray'},
-        //    '2017-05-24': {startingDay: true, color: 'gray'},
-        //    '2017-05-25': {color: 'gray'},
-        //    '2017-05-26': {endingDay: true, color: 'gray'}}}
-        // monthFormat={'yyyy'}
-        // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
+        markedDates={{
+          '2020-12-28': { textColor: '#43515c' },
+          '2017-05-09': { textColor: '#43515c' },
+          '2017-05-14': { startingDay: true, endingDay: true, color: 'blue' },
+          '2017-05-26': { endingDay: true, color: 'gray' },
+        }}
+        monthFormat={'yyyy'}
         renderDay={(day, item) => <Text>{day ? day.day : 'item'}</Text>}
         // hideExtraDays={false}
       />
@@ -81,8 +70,7 @@ export default class AgendaScreen extends Component<any, State> {
     return (
       <TouchableOpacity
         style={[styles.item, { height: item.height }]}
-        onPress={() => Alert.alert(item.name)}
-      >
+        onPress={() => Alert.alert(item.name)}>
         <Text>{item.name}</Text>
       </TouchableOpacity>
     );
